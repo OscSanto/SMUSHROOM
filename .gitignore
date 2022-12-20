@@ -46,6 +46,10 @@ ExportedObj/
 *.mdb
 *.opendb
 *.VC.db
+# *.blend?   Blender files ? matches a single chracter, * matches 0 or more chracters
+
+# Blender
+BlenderFiles
 
 # Unity3D generated meta files
 *.pidb.meta
