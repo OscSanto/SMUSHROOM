@@ -1,0 +1,19 @@
+To export character with textures (and in general):
+File > export > fbx > select path mode "COPY" > turn on "embeded textures" (option next to path mode) > export to github
+
+
+=======BEFORE EXPORTING======
+1)Make sure you have "selected objects" selected.
+	Select only the objects you want to export.
+2)Apply scalings: FBX units scale
+3)Forward: Y forward
+	Attention to character transform rotation "forward" for exporting characters into unity.
+	In blender, characters should face the "Y" axis. This is unitys "forward". 
+4)If exporting animation:
+   Bake Animations: on
+	NLA Strips: on
+	All actions: off
+	
+===== Video on importing fbx into unity====
+https://www.youtube.com/watch?v=Bl2xBW-L7uU&list=FLl7YYZtTERl5rLMIlCxnZqQ&index=3
+
