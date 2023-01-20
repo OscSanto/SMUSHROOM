@@ -25,7 +25,8 @@ ModelImporter:
     optimizeGameObjects: 0
     removeConstantScaleCurves: 1
     motionNodeName: 
-    rigImportErrors: 
+    rigImportErrors: "Invalid Avatar Rig Configuration. Missing or invalid transform:\n\tRequired
+      human bone 'Head' not found\n"
     rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
@@ -33,7 +34,7 @@ ModelImporter:
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 1
+    animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -176,7 +177,107 @@ ModelImporter:
   humanDescription:
     serializedVersion: 3
     human: []
-    skeleton: []
+    skeleton:
+    - name: SMUSHChar_01(Clone)
+      parentName: 
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Armature
+      parentName: SMUSHChar_01(Clone)
+      position: {x: -0.05023071, y: 0, z: 0.89073694}
+      rotation: {x: -0.27611148, y: 0.04713712, z: -0.014128634, w: 0.9598651}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Root
+      parentName: Armature
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: -0.5, y: -0.5, z: -0.5, w: 0.5}
+      scale: {x: 1, y: 1, z: 0.99999994}
+    - name: pelvis
+      parentName: Root
+      position: {x: 0, y: 0, z: 1.1758254}
+      rotation: {x: 0.004262579, y: 0.11701196, z: 0.010276134, w: 0.9930682}
+      scale: {x: 1, y: 1, z: 1}
+    - name: head
+      parentName: pelvis
+      position: {x: -0.00000005160109, y: 9.313226e-10, z: 1.8622069}
+      rotation: {x: -0.028660573, y: 0.07049739, z: -0.027801985, w: 0.9967125}
+      scale: {x: 0.99999994, y: 1, z: 1}
+    - name: arm.R
+      parentName: head
+      position: {x: 0.21656208, y: 1.6204003, z: 0.7762433}
+      rotation: {x: 0.74607575, y: 0.03200312, z: 0.17952459, w: -0.64040446}
+      scale: {x: 1.0000001, y: 1.0000001, z: 1}
+    - name: hand.R
+      parentName: arm.R
+      position: {x: 0.059433013, y: -0.003932029, z: 0.7355485}
+      rotation: {x: 0.11577644, y: 0.011308928, z: -0.37512413, w: 0.91964656}
+      scale: {x: 0.99999994, y: 0.9999999, z: 0.9999999}
+    - name: hand.R_end
+      parentName: hand.R
+      position: {x: 0, y: 0, z: 0.3979942}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: arm.L
+      parentName: head
+      position: {x: 0.12400293, y: -1.5729957, z: 0.7045764}
+      rotation: {x: -0.0063886773, y: 0.8185798, z: -0.5743252, w: 0.0060768933}
+      scale: {x: 1.0000001, y: 0.99999994, z: 1.0000001}
+    - name: hand.L
+      parentName: arm.L
+      position: {x: 0.046093207, y: 0.04586275, z: 0.74582505}
+      rotation: {x: 0.1117083, y: 0.021168604, z: 0.22092766, w: 0.9686403}
+      scale: {x: 1, y: 0.99999994, z: 1}
+    - name: hand.L_end
+      parentName: hand.L
+      position: {x: 0, y: 0, z: 0.3979942}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: leg.R
+      parentName: Root
+      position: {x: 0.5054273, y: 0.8113537, z: 2.4952316}
+      rotation: {x: 0.9225831, y: 0.29625311, z: -0.09355614, w: -0.22873959}
+      scale: {x: 0.9999998, y: 0.9999997, z: 0.99999994}
+    - name: knee.R
+      parentName: leg.R
+      position: {x: -0.12488386, y: 0.05291322, z: 1.0309656}
+      rotation: {x: -0.18054084, y: -0.29966268, z: 0.30635524, w: 0.8852986}
+      scale: {x: 0.99999994, y: 0.99999994, z: 1}
+    - name: foot.R
+      parentName: knee.R
+      position: {x: 0.000000018626451, y: 0.000000034458935, z: 1.0006309}
+      rotation: {x: -0.2684447, y: 0.24165583, z: -0.7179372, w: 0.5950682}
+      scale: {x: 1, y: 1, z: 1}
+    - name: foot.R_end
+      parentName: foot.R
+      position: {x: 0, y: 0, z: 0.78517735}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: leg.L
+      parentName: Root
+      position: {x: 0.5173386, y: -0.8168881, z: 2.480772}
+      rotation: {x: 0.92274797, y: 0.027734801, z: -0.38431144, w: -0.008470595}
+      scale: {x: 1, y: 1.0000001, z: 1}
+    - name: knee.L
+      parentName: leg.L
+      position: {x: 0.35020125, y: 0.13566507, z: 0.92387855}
+      rotation: {x: 0.07363009, y: -0.16871281, z: 0.96271646, w: -0.19822155}
+      scale: {x: 1, y: 0.9999998, z: 1.0000004}
+    - name: foot.L
+      parentName: knee.L
+      position: {x: 9.313226e-10, y: -0.00000024214387, z: 1.0006304}
+      rotation: {x: 0.1027273, y: -0.27465937, z: -0.4997458, w: 0.8150236}
+      scale: {x: 0.99999994, y: 1, z: 0.99999994}
+    - name: foot.L_end
+      parentName: foot.L
+      position: {x: 0, y: 0, z: 0.78517735}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Char_01
+      parentName: SMUSHChar_01(Clone)
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0.000000081460335, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
     armTwist: 0.5
     foreArmTwist: 0.5
     upperLegTwist: 0.5
@@ -187,7 +288,7 @@ ModelImporter:
     globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
-    hasExtraRoot: 0
+    hasExtraRoot: 1
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   autoGenerateAvatarMappingIfUnspecified: 1
