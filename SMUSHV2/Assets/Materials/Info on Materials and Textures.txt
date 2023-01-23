@@ -1,0 +1,2 @@
+Issue: zooming out causes seams of texture to be visible.
+Solution: click on texture, in inspector, click on advance and turn of generate mip mapps

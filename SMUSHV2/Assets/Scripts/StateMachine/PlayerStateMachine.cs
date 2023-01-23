@@ -40,6 +40,7 @@ public class PlayerStateMachine : MonoBehaviour {
     PlayerStateFactory _states;
 
     private float zoom = 1.0f;
+    private bool canZoom = true;
     public CinemachineFreeLook cinemachineVirtualCamera;
     public float zoomMinDistance = 1.5f;
     public float zoomMaxDistance = 6f;
@@ -76,7 +77,8 @@ public class PlayerStateMachine : MonoBehaviour {
 
     public float Speed { get { return speed; } }
 
-    public float Zoom { get { return zoom; } set { zoom = value; } }
+    //public float Zoom { get { return zoom; } set { zoom = value; } }
+   
 
 
     // Start is called before the first frame update
@@ -89,7 +91,6 @@ public class PlayerStateMachine : MonoBehaviour {
 
         cameraRelativeMovement = ConvertToCameraSpace(appliedMovement);
         characterController.Move(cameraRelativeMovement * Time.deltaTime);
-        CameraZoom();
 
     }
    
@@ -115,30 +116,12 @@ public class PlayerStateMachine : MonoBehaviour {
         playerInput.CharacterControls.Jump.started += onJump;
         playerInput.CharacterControls.Jump.canceled += onJump;
 
-        playerInput.CharacterControls.Zoom.started += onZoom;
-        playerInput.CharacterControls.Zoom.canceled += onZoom;
+        
 
         SetupJumpVaraibles();
     }
     //* TODO: create a condition, where if the range of mouse is -240 to 240, divide by 240. 
-    private void CameraZoom(){
-        //input scroll y ranges from (-240, 240)
-        //my mouse only ranges from (-120, 120)
-        // multiply it with zoomfactor, scale it to (-0.5,0.5)
-        // zoom is not mouse wheel's axis position, but the amount of mouse scroll up or down.
-        this.Zoom -= this.Zoom / 120f * this.zoomFactor;
-        this.Zoom = Mathf.Clamp(this.zoom, 0.0f, this.zoomMaxDistance);
-
-        //use smooth damp to calcululate current camera distance to get a smooth transition
-        this.cameraDistance = Mathf.SmoothDamp(this.cameraDistance, this.zoom, ref this.zoomvelocity, Time.unscaledTime * this.zoomspeed);
-        Debug.Log("cam distance" + cameraDistance);
-        Debug.Log("zoom" + zoom);
-        this.cinemachineVirtualCamera.GetComponents<CinemachineFreeLook>();
-        cinemachineVirtualCamera.m_Lens.FieldOfView += cameraDistance;
-
-//        this.cinemachineVirtualCamera.GetCinemachineComponent<Cinemachine3rdPersonFollow>().CameraDistance = this.cameraDistance;
-    }
-
+   
 
     Vector3 ConvertToCameraSpace(Vector3 vectorToRotate){
         // try to change this to player forward and right? to enable convert to player space rotation. * And NOT based on camera*
@@ -201,7 +184,6 @@ public class PlayerStateMachine : MonoBehaviour {
         isJumpPressed = context.ReadValueAsButton();
         requireNewJumpPress = false;
     }
-    void onZoom(InputAction.CallbackContext context){ zoom = context.ReadValue<float>(); }
 
     //enable the character controls action map
     void OnEnable(){ playerInput.CharacterControls.Enable(); }
