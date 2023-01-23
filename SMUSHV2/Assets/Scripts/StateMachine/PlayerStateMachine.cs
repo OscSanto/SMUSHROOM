@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -29,14 +30,24 @@ public class PlayerStateMachine : MonoBehaviour {
     // jumping variables
     bool isJumpPressed = false;
     float initialJumpVelocity;
-    float maxJumpHeight = 3.0f;
-    float maxJumpTime = 0.75f;
+    public float maxJumpHeight = 3.0f;
+    public float maxJumpTime = 0.75f;
     bool isJumping = false;
     bool requireNewJumpPress = false;
 
     // state varaibles
     PlayerBaseState _currentState;
     PlayerStateFactory _states;
+
+    private float zoom = 1.0f;
+    public CinemachineFreeLook cinemachineVirtualCamera;
+    public float zoomMinDistance = 1.5f;
+    public float zoomMaxDistance = 6f;
+    public float zoomspeed = 0.02f;
+    public float zoomFactor = 0.5f;
+    private float targetzoom = 1.0f; //target camera distance
+    private float cameraDistance = 2f; //current camera distance
+    private float zoomvelocity = 0f; //smooth velocity
 
     [SerializeField] private float speed = 12f;
 
@@ -65,6 +76,9 @@ public class PlayerStateMachine : MonoBehaviour {
 
     public float Speed { get { return speed; } }
 
+    public float Zoom { get { return zoom; } set { zoom = value; } }
+
+
     // Start is called before the first frame update
     void Start(){ characterController.Move(appliedMovement * Time.deltaTime); }
 
@@ -75,7 +89,10 @@ public class PlayerStateMachine : MonoBehaviour {
 
         cameraRelativeMovement = ConvertToCameraSpace(appliedMovement);
         characterController.Move(cameraRelativeMovement * Time.deltaTime);
+        CameraZoom();
+
     }
+   
     void Awake(){
         playerInput = new PlayerInput();
         characterController = GetComponent<CharacterController>();
@@ -90,21 +107,39 @@ public class PlayerStateMachine : MonoBehaviour {
         // cancel phase is releaseing the button
         playerInput.CharacterControls.Move.started += onMovementInput;
         playerInput.CharacterControls.Move.canceled += onMovementInput;
-        playerInput.CharacterControls.Move.performed += onMovementInput; //This is for joysticks. Due to inbetween values between 0 and 1
+        playerInput.CharacterControls.Move.performed
+            += onMovementInput; //This is for joysticks. Due to inbetween values between 0 and 1
 
         playerInput.CharacterControls.Run.started += onRun;
         playerInput.CharacterControls.Run.canceled += onRun;
         playerInput.CharacterControls.Jump.started += onJump;
         playerInput.CharacterControls.Jump.canceled += onJump;
 
+        playerInput.CharacterControls.Zoom.started += onZoom;
+        playerInput.CharacterControls.Zoom.canceled += onZoom;
+
         SetupJumpVaraibles();
     }
-    void SetupJumpVaraibles(){
-        //  timeToApex, how long it takes to reach the max height. (assuming its a symetrical parabola, we divide maxjumptime in half to get the top)
-        float timeToApex = maxJumpTime / 2;
-        gravity = (-2 * maxJumpHeight) / Mathf.Pow(timeToApex, 2);
-        initialJumpVelocity = (2 * maxJumpHeight) / timeToApex;
+    //* TODO: create a condition, where if the range of mouse is -240 to 240, divide by 240. 
+    private void CameraZoom(){
+        //input scroll y ranges from (-240, 240)
+        //my mouse only ranges from (-120, 120)
+        // multiply it with zoomfactor, scale it to (-0.5,0.5)
+        // zoom is not mouse wheel's axis position, but the amount of mouse scroll up or down.
+        this.Zoom -= this.Zoom / 120f * this.zoomFactor;
+        this.Zoom = Mathf.Clamp(this.zoom, 0.0f, this.zoomMaxDistance);
+
+        //use smooth damp to calcululate current camera distance to get a smooth transition
+        this.cameraDistance = Mathf.SmoothDamp(this.cameraDistance, this.zoom, ref this.zoomvelocity, Time.unscaledTime * this.zoomspeed);
+        Debug.Log("cam distance" + cameraDistance);
+        Debug.Log("zoom" + zoom);
+        this.cinemachineVirtualCamera.GetComponents<CinemachineFreeLook>();
+        cinemachineVirtualCamera.m_Lens.FieldOfView += cameraDistance;
+
+//        this.cinemachineVirtualCamera.GetCinemachineComponent<Cinemachine3rdPersonFollow>().CameraDistance = this.cameraDistance;
     }
+
+
     Vector3 ConvertToCameraSpace(Vector3 vectorToRotate){
         // try to change this to player forward and right? to enable convert to player space rotation. * And NOT based on camera*
         float currentYValue = vectorToRotate.y;
@@ -132,7 +167,8 @@ public class PlayerStateMachine : MonoBehaviour {
         return vectorRotatedToCameraSpace;
     }
     void handleRotation(){
-        Vector3 positionToLookAt; //where we are moving next
+        //where we are moving next
+        Vector3 positionToLookAt; 
 
         // the change in position our character should point to
         positionToLookAt.x = cameraRelativeMovement.x;
@@ -149,6 +185,12 @@ public class PlayerStateMachine : MonoBehaviour {
                 = Quaternion.Slerp(currentRotation, targetRotation, rotationFactorPerFrame * Time.deltaTime);
         }
     }
+    void SetupJumpVaraibles(){
+        //  timeToApex, how long it takes to reach the max height. (assuming its a symetrical parabola, we divide maxjumptime in half to get the top)
+        float timeToApex = maxJumpTime / 2;
+        gravity = (-2 * maxJumpHeight) / Mathf.Pow(timeToApex, 2);
+        initialJumpVelocity = (2 * maxJumpHeight) / timeToApex;
+    }
     void onMovementInput(InputAction.CallbackContext context){
         //currentMovementInput now stores the WASD/Joystick input values
         currentMovementInput = context.ReadValue<Vector2>();
@@ -159,12 +201,11 @@ public class PlayerStateMachine : MonoBehaviour {
         isJumpPressed = context.ReadValueAsButton();
         requireNewJumpPress = false;
     }
-    void OnEnable(){
-        //enable the character controls action map
-        playerInput.CharacterControls.Enable();
-    }
-    void OnDisable(){
-        //disable the character controls action map
-        playerInput.CharacterControls.Disable();
-    }
+    void onZoom(InputAction.CallbackContext context){ zoom = context.ReadValue<float>(); }
+
+    //enable the character controls action map
+    void OnEnable(){ playerInput.CharacterControls.Enable(); }
+
+    //disable the character controls action map
+    void OnDisable(){ playerInput.CharacterControls.Disable(); }
 }
