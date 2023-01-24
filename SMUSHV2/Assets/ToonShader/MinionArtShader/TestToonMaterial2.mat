@@ -185,6 +185,10 @@ Material:
         m_Texture: {fileID: 2800000, guid: f192200ec3df7f544a429c5606afe5df, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Texture2DAsset_c6e26cab6a234c2a82c1866a28817ae8_Out_0:
+        m_Texture: {fileID: 2800000, guid: 7f8ce87efcd575b488f4fd14aebe6ee9, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _Texture2DAsset_f65113752127401e996cba97655a9648_Out_0:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -361,6 +365,7 @@ Material:
     - _Metallic: 0
     - _Nearest_Distance: 0.5
     - _NormalMapSpace: 0
+    - _NormalMap_Strength: 5.36
     - _NormalScale: 1
     - _OUTLINE: 0
     - _ObjectSpaceUVMapping: 0
@@ -483,7 +488,7 @@ Material:
     - _BaseColorMap_MipInfo: {r: 0, g: 0, b: 0, a: 0}
     - _BaseColorMaskColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _ColorSecond: {r: 1, g: 0, b: 0, a: 0}
+    - _ColorSecond: {r: 1, g: 1, b: 1, a: 0}
     - _ColorShift: {r: 0, g: 0, b: 0, a: 1}
     - _DiffusionProfileAsset: {r: 0, g: 0, b: 0, a: 0}
     - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}
@@ -508,6 +513,7 @@ Material:
     - _RimLightMaskColor: {r: 1, g: 0, b: 1, a: 1}
     - _SecondShadeMaskColor: {r: 0, g: 0, b: 1, a: 1}
     - _SpecularColor: {r: 1, g: 1, b: 1, a: 1}
+    - _Texture_Offset: {r: 1, g: 1, b: 0, a: 0}
     - _ThicknessRemap: {r: 0, g: 1, b: 0, a: 0}
     - _Toon_Ramp_Tinting: {r: 1, g: 1, b: 1, a: 0}
     - _TransmittanceColor: {r: 1, g: 1, b: 1, a: 1}
