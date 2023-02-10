@@ -51,6 +51,8 @@ ExportedObj/
 # Blender
 BlenderFiles
 
+# Photoshop
+*.psd
 # Unity3D generated meta files
 *.pidb.meta
 *.pdb.meta
