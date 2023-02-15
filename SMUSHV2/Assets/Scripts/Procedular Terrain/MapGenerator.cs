@@ -9,7 +9,7 @@ public class MapGenerator : MonoBehaviour {
 
     private const int mapChunkSize = 241;
     [Range(0,6)]
-    public int levelOfDetail; //loD
+    public int levelOfDetail; //loD only 1 2 4 6
     public float noiseScale;
 
     public bool autoUpdate;
@@ -27,7 +27,7 @@ public class MapGenerator : MonoBehaviour {
     public TerrainType[] regions;
 
     public void GenerateMap(){
-        float[,] noiseMap = Noise.generateNoiseMap(mapChunkSize, mapChunkSize, seed, noiseScale, octaves, persistance,lacunarity, offset);
+        float[,] noiseMap = Noise.GenerateNoiseMap(mapChunkSize, mapChunkSize, seed, noiseScale, octaves, persistance,lacunarity, offset);
 
         Color[] colormap = new Color [mapChunkSize * mapChunkSize];
         //episode E04: colors
